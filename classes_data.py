@@ -41,3 +41,4 @@ class errand:
     def price(self, nb_shop):
         
         
+        
