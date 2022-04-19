@@ -90,7 +90,28 @@ class recipe:
         self.ingredients = ingredients
         self.prep_time = prep_time
         self.guests = guests
-       
+        
+    def food_needed(self, profil):
+        '''function which returns a dataframe containing the foods needed for the recipe and which aren't owned by the profil'''
+        name = []
+        quantity = []
+        for i in self.ingredients.index:
+            # The index of the line containing the food is retrieved
+            l = profil.fridge.index[ profil.fridge["name"] == self.ingredient["name"][i] ].tolist()
+            try:
+                if profil.fridge["quantity"][l[0]] <= self.ingredients["quantity"][i]:
+                    name.append(self.ingredients["name"][i])
+                    quantity.append( self.ingredients["quantity"][i] - profil.fridge["quantity"][l[0]] )
+            except IndexError:
+                name.append(self.ingredients["name"][i])
+                quantity.append( self.ingredients["quantity"][i] )
+        return pd.DataFrame(name, quantity, columns=["name","quantity"])
+    
+
+
+
+class ProductNotAvailable(Exception):
+    pass
 
 class errand:
     '''
@@ -102,13 +123,42 @@ class errand:
     def price(self, store):
         p = 0
         for i in self.needs.index:
-            df = store.stocks.loc[store.stocks["name"] == self.needs[i] ]
-            
-        return df
+            # The index of the line containing the food is retrieved
+            l = store.stocks.index[ store.stocks["name"] == self.needs["name"][i] ].tolist()
+            try:
+                if self.needs["quantity"][i] <= store.stocks["quantity"][l[0]]:
+                    p = p + self.needs["quantity"][i]*store.stocks["price"][l[0]]
+                else:
+                    raise ProductNotAvailable("The shop doesn't have enough quantity")
+            except IndexError:
+                raise ProductNotAvailable
+        return p
+
+### Tests unitaires pour les classes et les méthodes : 
+
+def unitary_tests():
+    print(ut_errand_price1())
+    print(ut_errand_price2())
+    print(ut_errand_price3())
     
 
-errand_test = errand( pd.DataFrame( {"name" : ["pasta"], "quantity" : [10]}) )
-store_test = shop(df_shops["stocks"][0], 0)
+def ut_errand_price1():
+    errand_test = errand( pd.DataFrame( {"name" : ["pasta","riz"], "quantity" : [10,3]}) )
+    store_test = shop(df_shops["stocks"][0], 0)
+    return errand_test.price(store_test) == 12.25
 
+def ut_errand_price2():
+    errand_test = errand( pd.DataFrame( {"name" : ["pasta"], "quantity" : [10]}) )
+    store_test = shop(df_shops["stocks"][0], 0)
+    return errand_test.price(store_test) == 10.0
 
+def ut_errand_price3():
+    errand_test = errand( pd.DataFrame( {"name" : ["pasta","riz"], "quantity" : [10,4]}) )
+    store_test = shop(df_shops["stocks"][0], 0)
+    try:
+        errand_test.price(store_test)
+        return False
+    except ProductNotAvailable:
+        return True
 
+unitary_tests()
