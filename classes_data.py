@@ -1,7 +1,7 @@
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
-from math import * 
+from math import *
 
 ### Databases
 
@@ -108,6 +108,8 @@ class recipe:
         return pd.DataFrame(name, quantity, columns=["name","quantity"])
     
 
+recipe_test = recipe(df_recipes["ingredients"][0], df_recipes["prep_time"][0],df_recipes["guests"][0] )
+#user_test = user()
 
 
 class ProductNotAvailable(Exception):
