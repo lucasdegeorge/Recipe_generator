@@ -107,13 +107,11 @@ class recipe:
                 quantity.append( self.ingredients["quantity"][i] )
         return pd.DataFrame(list(zip(name, quantity)), columns=["name","quantity"])
     
-
-recipe_test = recipe(df_recipes["ingredients"][0], df_recipes["prep_time"][0],df_recipes["guests"][0] )
-user_test = user(health = {}, coord = 0, budget = 100, 
-                 fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}) ) 
-
-recipe_test.food_needed(user_test)
-
+    def best_price(self,profil,preference,shops):
+        ''' 
+        preference is a vector containing coefficient telling either the profil prefers time, money, quality, etc. 
+        '''
+        
 
 class ProductNotAvailable(Exception):
     pass
