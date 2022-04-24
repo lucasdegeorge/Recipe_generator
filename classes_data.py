@@ -6,7 +6,7 @@ from math import *
 ### Databases
 
 #  Energy, fat, saturated fatty acid, carbohydrates, sugar, protein, lipid
-dict_food = { "name" : ["pasta","riz","tomato"],
+dict_food = { "name" : ["pasta","rice","tomato"],
               "energy" : [566,615,81.1],
               "saturated_fatty_acid" : [0.34, 0.076, 0.056],
               "carbohydrates" : [23, 31.8,2.49],
@@ -19,13 +19,13 @@ df_food = pd.DataFrame(dict_food)
 df_r1 = pd.DataFrame( { "ingredient" : ["pasta", "tomato"],
                         "quantity" : [150, 2] } )
 
-df_r2 = pd.DataFrame( { "ingredient" : ["riz", "tomato"],
+df_r2 = pd.DataFrame( { "ingredient" : ["rice", "tomato"],
                         "quantity" : [200, 2] } )
 
-df_r3 = pd.DataFrame( { "ingredient" : ["pasta", "riz"],
+df_r3 = pd.DataFrame( { "ingredient" : ["pasta", "rice"],
                         "quantity" : [100, 100] } )
 
-dict_recipes = { "name" : ["tomato_pastas", "tomato_riz", "riz_pastas"],
+dict_recipes = { "name" : ["tomato_pastas", "tomato_rice", "rice_pastas"],
                  "ingredients" : [ df_r1, df_r2, df_r3 ],
                  "prep_time" : [20, 20, 30],
                  "guests" : [1,1,1]
@@ -33,19 +33,19 @@ dict_recipes = { "name" : ["tomato_pastas", "tomato_riz", "riz_pastas"],
 
 df_recipes = pd.DataFrame(dict_recipes)
 
-df_s1 = pd.DataFrame( {"name" : ["pasta","riz","tomato"],
+df_s1 = pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                      "quantity" : [20,3,1],
                      "price" : [1, 0.75, 0.4],
                      "expiry_date" : ["","",""]
                          }  ) 
 
-df_s2 =  pd.DataFrame( {"name" : ["pasta","riz","tomato"],
+df_s2 =  pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                      "quantity" : [1,12,6],
                      "price" : [0.9, 1.25, 0.6],
                      "expiry_date" : ["","",""]
                          }  ) 
 
-df_s3 =  pd.DataFrame( {"name" : ["pasta","riz","tomato"],
+df_s3 =  pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                      "quantity" : [4,16,23],
                      "price" : [1.2, 1, 0.5],
                      "expiry_date" : ["","",""]
@@ -110,7 +110,7 @@ class recipe:
 
 recipe_test = recipe(df_recipes["ingredients"][0], df_recipes["prep_time"][0],df_recipes["guests"][0] )
 user_test = user(health = {}, coord = 0, budget = 100, 
-                 fridge = pd.DataFrame( {"name" : ["pasta","riz"], "quantity" : [10,3]}) ) 
+                 fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}) ) 
 
 recipe_test.food_needed(user_test)
 
@@ -139,41 +139,4 @@ class errand:
                 raise ProductNotAvailable
         return p
 
-### Tests unitaires pour les classes et les méthodes : 
 
-def unitary_tests():
-    print(ut_errand_price1())
-    print(ut_errand_price2())
-    print(ut_errand_price3())
-    
-
-def ut_errand_price1():
-    errand_test = errand( pd.DataFrame( {"name" : ["pasta","riz"], "quantity" : [10,3]}) )
-    store_test = shop(df_shops["stocks"][0], 0)
-    return errand_test.price(store_test) == 12.25
-
-def ut_errand_price2():
-    errand_test = errand( pd.DataFrame( {"name" : ["pasta"], "quantity" : [10]}) )
-    store_test = shop(df_shops["stocks"][0], 0)
-    return errand_test.price(store_test) == 10.0
-
-def ut_errand_price3():
-    errand_test = errand( pd.DataFrame( {"name" : ["pasta","riz"], "quantity" : [10,4]}) )
-    store_test = shop(df_shops["stocks"][0], 0)
-    try:
-        errand_test.price(store_test)
-        return False
-    except ProductNotAvailable:
-        return True
-    
-def ut_recipe_food_needed1():
-    recipe_test = recipe(df_recipes["ingredients"][0], df_recipes["prep_time"][0],df_recipes["guests"][0] )
-    user_test = user(health = {}, coord = 0, budget = 100, 
-                     fridge = pd.DataFrame( {"name" : ["pasta","riz"], "quantity" : [10,3]}) ) 
-    res = pd.DataFrame({ "name" : ["pasta", "tomato"],
-                            "quantity" : [140, 2] })
-    return res.equals(recipe_test.food_needed(user_test))
-
-
-
-unitary_tests()
