@@ -69,7 +69,7 @@ class user:
         self.health_data = health
         self.adress = coord
         self.budget = budget
-        self.fidge = fridge
+        self.fridge = fridge
 
 
 class shop:
@@ -97,19 +97,22 @@ class recipe:
         quantity = []
         for i in self.ingredients.index:
             # The index of the line containing the food is retrieved
-            l = profil.fridge.index[ profil.fridge["name"] == self.ingredient["name"][i] ].tolist()
+            l = profil.fridge.index[ profil.fridge["name"] == self.ingredients["ingredient"][i] ].tolist()
             try:
                 if profil.fridge["quantity"][l[0]] <= self.ingredients["quantity"][i]:
-                    name.append(self.ingredients["name"][i])
+                    name.append(self.ingredients["ingredient"][i])
                     quantity.append( self.ingredients["quantity"][i] - profil.fridge["quantity"][l[0]] )
             except IndexError:
-                name.append(self.ingredients["name"][i])
+                name.append(self.ingredients["ingredient"][i])
                 quantity.append( self.ingredients["quantity"][i] )
-        return pd.DataFrame(name, quantity, columns=["name","quantity"])
+        return pd.DataFrame(list(zip(name, quantity)), columns=["name","quantity"])
     
 
 recipe_test = recipe(df_recipes["ingredients"][0], df_recipes["prep_time"][0],df_recipes["guests"][0] )
-#user_test = user()
+user_test = user(health = {}, coord = 0, budget = 100, 
+                 fridge = pd.DataFrame( {"name" : ["pasta","riz"], "quantity" : [10,3]}) ) 
+
+recipe_test.food_needed(user_test)
 
 
 class ProductNotAvailable(Exception):
@@ -162,5 +165,15 @@ def ut_errand_price3():
         return False
     except ProductNotAvailable:
         return True
+    
+def ut_recipe_food_needed1():
+    recipe_test = recipe(df_recipes["ingredients"][0], df_recipes["prep_time"][0],df_recipes["guests"][0] )
+    user_test = user(health = {}, coord = 0, budget = 100, 
+                     fridge = pd.DataFrame( {"name" : ["pasta","riz"], "quantity" : [10,3]}) ) 
+    res = pd.DataFrame({ "name" : ["pasta", "tomato"],
+                            "quantity" : [140, 2] })
+    return res.equals(recipe_test.food_needed(user_test))
+
+
 
 unitary_tests()
