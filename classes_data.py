@@ -110,11 +110,25 @@ class recipe:
     def best_price(self,profil,preference,shops):
         ''' 
         preference is a vector containing coefficient telling either the profil prefers time, money, quality, etc. 
+        return a tuple with the shop where the best price is found and the price
         '''
-        
-
-class ProductNotAvailable(Exception):
-    pass
+        food_to_purchase = errand(self.food_needed(profil))
+        best_price = np.inf
+        best_shop = -1
+        for i in range(len(shops)):
+            try:
+                p = food_to_purchase.price(shop[i])
+                ## Here we can introduce additional costs in the price (routes, fuel, etc.)
+                if p < best_price:
+                    best_shop = i
+                    best_price = p
+            except ProductNotAvailable:
+                pass
+        if not(best_shop == -1):
+            return (best_shop, best_price)
+        else:
+            raise NoWhereToBuy
+            
 
 class errand:
     '''
@@ -136,5 +150,13 @@ class errand:
             except IndexError:
                 raise ProductNotAvailable
         return p
+
+## Exception 
+
+class NoWhereToBuy(Exception):
+    pass
+
+class ProductNotAvailable(Exception):
+    pass 
 
 
