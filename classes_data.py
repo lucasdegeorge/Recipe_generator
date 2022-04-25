@@ -34,19 +34,19 @@ dict_recipes = { "name" : ["tomato_pastas", "tomato_rice", "rice_pastas"],
 df_recipes = pd.DataFrame(dict_recipes)
 
 df_s1 = pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                     "quantity" : [20,3,1],
+                     "quantity" : [150,3,2],
                      "price" : [1, 0.75, 0.4],
                      "expiry_date" : ["","",""]
                          }  ) 
 
 df_s2 =  pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                     "quantity" : [1,12,6],
+                     "quantity" : [210,12,6],
                      "price" : [0.9, 1.25, 0.6],
                      "expiry_date" : ["","",""]
                          }  ) 
 
 df_s3 =  pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                     "quantity" : [4,16,23],
+                     "quantity" : [400,16,23],
                      "price" : [1.2, 1, 0.5],
                      "expiry_date" : ["","",""]
                          }  ) 
@@ -117,7 +117,7 @@ class recipe:
         best_shop = -1
         for i in range(len(shops)):
             try:
-                p = food_to_purchase.price(shop[i])
+                p = food_to_purchase.price(shops[i])
                 ## Here we can introduce additional costs in the price (routes, fuel, etc.)
                 if p < best_price:
                     best_shop = i
@@ -137,7 +137,7 @@ user_test = user(health = {}, coord = 0, budget = 100,
 store_test1 = shop(df_shops["stocks"][0], 0)
 store_test2 = shop(df_shops["stocks"][1], 0)
 
-
+recipe_test.best_price(user_test, [], [store_test1,store_test2])
 
 
 
