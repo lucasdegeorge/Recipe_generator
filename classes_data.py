@@ -130,17 +130,6 @@ class recipe:
             raise NoWhereToBuy
             
 
-recipe_test = recipe(df_recipes["ingredients"][0], df_recipes["prep_time"][0],df_recipes["guests"][0] )
-user_test = user(health = {}, coord = 0, budget = 100, 
-                 fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}) ) 
-
-store_test1 = shop(df_shops["stocks"][0], 0)
-store_test2 = shop(df_shops["stocks"][1], 0)
-
-recipe_test.best_price(user_test, [], [store_test1,store_test2])
-
-
-
 class errand:
     '''
     shopping_list is a dataframe which contains data (name, quantity) on a specific food 
