@@ -65,12 +65,29 @@ class user:
     health is a dict with data about weight, height, sex, body_fat, ...
     fridge is a dataframe which contains data (name, quantity, expiry_date, fondness) on a specific food
     '''
-    def __init__(self,health, coord, budget, fridge):
+    def __init__(self,health, coord, budget, fridge, pref_food, pref_health):
         self.health_data = health
         self.adress = coord
         self.budget = budget
         self.fridge = fridge
-
+        self.pref_food = pref_food
+        self.pref_health = pref_health
+        
+    def which_recipe(self, recipes, shops, coefficients):
+        '''
+        coefficients is a vector containing the preferences of the user (bio, protein, bio, money, time, etc.)
+        '''
+        best_recipe = -1
+        best_value = (-1)*np.inf 
+        for i in range(len(recipes)):
+            if recipes[i].recipe_value(recipes[i],self) > best_value:
+                best_recipe = i
+                best_value = recipes[i].recipe_value(self,coefficient)
+        if best_recipe != -1:
+            return (best_recipe, best_value)
+        else:
+            raise NoRecipeFound
+    
 
 class shop:
     ''' 
@@ -124,12 +141,17 @@ class recipe:
                     best_price = p
             except ProductNotAvailable:
                 pass
-        if not(best_shop == -1):
+        if best_shop != -1:
             return (best_shop, best_price)
         else:
             raise NoWhereToBuy
             
-
+    def recipe_value(self,profil,coef_healf, coef):
+        value = 0 
+        # First, we determine the value of 
+        
+        
+            
 class errand:
     '''
     shopping_list is a dataframe which contains data (name, quantity) on a specific food 
@@ -153,10 +175,14 @@ class errand:
 
 ## Exception 
 
+class NoRecipeFound(Exception):
+    pass
+
 class NoWhereToBuy(Exception):
     pass
 
 class ProductNotAvailable(Exception):
     pass 
+
 
 
