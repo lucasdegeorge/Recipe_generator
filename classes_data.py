@@ -65,13 +65,13 @@ class user:
     health is a dict with data about weight, height, sex, body_fat, ...
     fridge is a dataframe which contains data (name, quantity, expiry_date, fondness) on a specific food
     '''
-    def __init__(self,health, coord, budget, fridge, pref_food, pref_health):
+    def __init__(self,health, coord, budget, fridge): #, pref_food, pref_health):
         self.health_data = health
         self.adress = coord
         self.budget = budget
         self.fridge = fridge
-        self.pref_food = pref_food
-        self.pref_health = pref_health
+        #self.pref_food = pref_food
+        #self.pref_health = pref_health
         
     def which_recipe(self, recipes, shops, coefficients):
         '''
@@ -82,7 +82,7 @@ class user:
         for i in range(len(recipes)):
             if recipes[i].recipe_value(recipes[i],self) > best_value:
                 best_recipe = i
-                best_value = recipes[i].recipe_value(self,coefficient)
+                best_value = recipes[i].recipe_value(self,coefficients)
         if best_recipe != -1:
             return (best_recipe, best_value)
         else:
@@ -123,6 +123,8 @@ class recipe:
                 name.append(self.ingredients["ingredient"][i])
                 quantity.append( self.ingredients["quantity"][i] )
         return pd.DataFrame(list(zip(name, quantity)), columns=["name","quantity"])
+    
+
     
     def best_price(self,profil,preference,shops):
         ''' 
@@ -183,6 +185,3 @@ class NoWhereToBuy(Exception):
 
 class ProductNotAvailable(Exception):
     pass 
-
-
-
