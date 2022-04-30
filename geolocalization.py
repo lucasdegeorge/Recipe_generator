@@ -74,7 +74,7 @@ for i in range(n) :
 trip_df = pd.DataFrame(trip_list)
 trip_df
 
-travel_informations = [(grocery_names['name'][i],trip_df['rows'][i][0]['elements'][0]['distance']['text'],trip_df['rows'][i][0]['elements'][0]['duration']['text']) for i in range(n))]
+travel_informations = [(grocery_names['name'][i],trip_df['rows'][i][0]['elements'][0]['distance']['text'],trip_df['rows'][i][0]['elements'][0]['duration']['text']) for i in range(n)]
 travel_informations 
 
 
