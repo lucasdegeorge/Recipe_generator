@@ -64,3 +64,12 @@ dict_shops = { "name" : ["Casino", "Leclerc", "Franprix"],
                
 df_shops = pd.DataFrame(dict_shops)
 
+grocery = [('Rapidmarket', '6.0 km', '11 mins'), 
+           ('G 20 Supermarche', '9.4 km', '11 mins'),
+           ('Your Saclay Market supermarket', '4.0 km', '7 mins'),
+           ('Alimentation général Proxi', '7.8 km', '13 mins'),
+           ('Djouher Market', '6.4 km', '11 mins'),
+           ('Franprix', '4.5 km', '8 mins'),
+           ('Superette De La Gare', '5.7 km', '9 mins'),
+           ('Carrefour Express', '10.3 km', '11 mins')]
+
