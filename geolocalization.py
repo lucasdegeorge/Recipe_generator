@@ -37,7 +37,7 @@ grocery_request = map_client.places_nearby(                             # Using 
 grocery_stores_list.extend(grocery_request.get('results'))
 next_page_token = grocery_request.get('next_page_token')
 
-while next_page_token:                                                  # Places API restricts requests for 20 by pages and 60 in total,
+while next_page_token:                                                  # Places API restricts answers for 20 by pages and 60 in total,
   time.sleep(5)                                                         # to avoid the 20 limits, we need to take in account all of the pages,
   grocery_request = map_client.places_nearby(                           # However, the 60 responses limit still represents an issue not solved yet
     location = user_coords,                                             # In order to bypass this issue, we limit our search radius to prevent 
