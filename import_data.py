@@ -98,4 +98,35 @@ dict_fruits = {"name" : ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Blackberry'
 
 df_fruits = pd.DataFrame(dict_fruits)
 print(df_fruits)
+
+### Meats eggs and fish
+
+df_mef=pd.DataFrame.from_dict({"name":['Red Meat', 'White meat' ,'Salmon','Tuna','Mackerel'],
+                     "energy":[195,173,205,111,189],
+                     "protein":[26,28,23,26.8,21],
+                     "carbohydrates":[0,0,0,0,0],
+                     "sugar":[0,0,0,0,0],
+                     "lipid":[10,6.5,12.5,0.4,11],})
+print(df_mef)
+
+### Cereal
+
+df_Cereal=pd.DataFrame.from_dict({"name":['Rice', 'Pasta' ,'Oat flakes','Bread'],
+                     "energy":[145,126,378,287],
+                     "protein":[3,4,17,8],
+                     "carbohydrates":[31,25,55,58],
+                     "sugar":[0.2,0.6,1.2,2.3],
+                     "lipid":[0.41,0.5,7,1.4],})
+
+print(df_Cereal)
+
+### Fats and Oils
+
+df_fat=pd.DataFrame.from_dict({"name":['Butter','Olive oil'],
+                     "energy":[741,900],
+                     "protein":[1,0.1],
+                     "carbohydrates":[1,0],
+                     "sugar":[1,0],
+                     "lipid":[81,99]})
+print(df_fat)
     
