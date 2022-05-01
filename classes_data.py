@@ -58,6 +58,12 @@ dict_shops = { "name" : ["Casino", "Leclerc", "Franprix"],
                
 df_shops = pd.DataFrame(dict_shops)
 
+### Constants : 
+p = 7
+
+
+
+
 ### Classes 
 
 class user:
@@ -163,9 +169,9 @@ class recipe:
         value = 0 
         # First, we determine the value due to the nutritive properties of the foods in the recipe
         # i=0,...,p-1 in coefs
-        for i in range(p):
-            value = value + 
-            
+        value = value + np.dot(self.food_value, profil.coefs[:p])
+        # Then, we determine the value due to the errand, the route and the budget
+        value = value 
             
         
         
