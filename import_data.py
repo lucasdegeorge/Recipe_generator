@@ -73,3 +73,29 @@ grocery = [('Rapidmarket', '6.0 km', '11 mins'),
            ('Superette De La Gare', '5.7 km', '9 mins'),
            ('Carrefour Express', '10.3 km', '11 mins')]
 
+######## Ingredients Data #########
+
+### Vegetables
+dict_vegetables = {"name" : ['Artichoke','Asparagus','Avocado','Beetroot','Broccoli','Carrot','Celeriac','Courgette ','Cucumber','Haricot','Lentil','Tomato'],
+                   "energy" : [25.2, 26.6, 205, 42.8, 37.6, 18.9, 26.2, 15.5, 15.6, 112, 127, 81.1],
+                   "protein" : [1.2, 2.69, 1.56, 1.74, 2.5, 0.55, 0.94, 0.93, 0.64, 6.75, 10.1, 0.86],
+                   "carbohydrates" : [3.02, 1.73, 0.83, 9.1, 1.23, 2.6, 4.32, 1.4, 2.54, 12, 16.2, 2.49 ],
+                   "sugar" : [0.8, 0.81, 0.4, 6.76, 0.8, 1.3, 1.2, 1.39, 1.67, 0.3, 0.2, 2.48],
+                   "lipid" : [0, 0.32, 20.6, 0.24, 0.4, 0, 0, 0.36, 0.11, 1.1, 0.58, 0.26]
+}
+                      
+df_vegetables = pd.DataFrame(dict_vegetables)
+print(df_vegetables)
+
+### Fruits 
+dict_fruits = {"name" : ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Blackberry', 'Cherry', 'Clementine', 'Melon', 'Strawberry', 'Watermelon' ],
+               "energy" : [54.9, 45.9, 90.5, 57.7, 47.3, 55.7, 47.3, 62.7, 38.6, 38.9],
+               "protein" : [0, 0.81, 1.06, 0.87, 1.13, 0.81, 0.81, 1.13, 0.63, 0.69],
+               "carbohydrates" : [11.7, 9.01, 19.7, 10.6, 6.53, 13, 9.17, 14.8, 6.03, 8.33], 
+               "sugar" : [11.3, 6.7, 15.6, 9.96, 6.1, 10, 8.6, 10.6, 5.6, 7.9],
+               "lipid" : [0, 0, 0, 0.33, 0.7, 0, 0, 0, 0, 0]   
+}
+
+df_fruits = pd.DataFrame(dict_fruits)
+print(df_fruits)
+    
