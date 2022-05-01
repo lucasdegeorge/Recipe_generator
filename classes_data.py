@@ -64,25 +64,25 @@ class user:
     ''' 
     health is a dict with data about weight, height, sex, body_fat, ...
     fridge is a dataframe which contains data (name, quantity, expiry_date, fondness) on a specific food
+    coefficients is a vector of 
     '''
-    def __init__(self,health, coord, budget, fridge): #, pref_food, pref_health):
+    def __init__(self,health, adress, budget, fridge, coefficients):
         self.health_data = health
-        self.adress = coord
+        self.adress = adress
         self.budget = budget
         self.fridge = fridge
-        #self.pref_food = pref_food
-        #self.pref_health = pref_health
+        self.coefs = coefficients
         
-    def which_recipe(self, recipes, shops, coefficients):
+    def which_recipe(self, recipes, shops):
         '''
-        coefficients is a vector containing the preferences of the user (bio, protein, bio, money, time, etc.)
+        coefficients is a vector containing the preferences of the user (energy, protein, bio, money, time, etc.)
         '''
         best_recipe = -1
         best_value = (-1)*np.inf 
         for i in range(len(recipes)):
-            if recipes[i].recipe_value(recipes[i],self) > best_value:
+            if recipes[i].recipe_value(self) > best_value:
                 best_recipe = i
-                best_value = recipes[i].recipe_value(self,coefficients)
+                best_value = recipes[i].recipe_value(self)
         if best_recipe != -1:
             return (best_recipe, best_value)
         else:
@@ -125,7 +125,6 @@ class recipe:
         return pd.DataFrame(list(zip(name, quantity)), columns=["name","quantity"])
     
 
-    
     def best_price(self,profil,preference,shops):
         ''' 
         preference is a vector containing coefficient telling either the profil prefers time, money, quality, etc. 
@@ -148,9 +147,26 @@ class recipe:
         else:
             raise NoWhereToBuy
             
-    def recipe_value(self,profil,coef_healf, coef):
+    def food_value(self):
+        '''
+        return a list containing the sum of the values of energy, fat, etc of the foods of the recipe
+        '''
+        res = np.zeros(len(df_food.columns)-1)
+        for i in self.ingredients.index:
+            l = df_food.index[ df_food["name"] == self.ingredients["ingredient"][i] ].tolist()
+            # For each energy, fat, etc ...
+            for j in range(1,len(df_food.columns)):
+                res[j-1] = res[j-1] + df_food.iloc[l[0]][j]
+        return res      
+
+    def recipe_value(self,profil):
         value = 0 
-        # First, we determine the value of 
+        # First, we determine the value due to the nutritive properties of the foods in the recipe
+        # i=0,...,p-1 in coefs
+        for i in range(p):
+            value = value + 
+            
+            
         
         
             
