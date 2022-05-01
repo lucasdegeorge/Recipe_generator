@@ -60,8 +60,7 @@ df_shops = pd.DataFrame(dict_shops)
 
 ### Constants : 
 p = 7
-
-
+d = 10
 
 
 ### Classes 
@@ -102,7 +101,7 @@ class shop:
     def __init__(self, stocks, coord):
         self.stocks = stocks
         self.hours = []
-        self.adress = coord
+        self.distance = coord
 
 
 class recipe:
@@ -131,25 +130,27 @@ class recipe:
         return pd.DataFrame(list(zip(name, quantity)), columns=["name","quantity"])
     
 
-    def best_price(self,profil,preference,shops):
+    def best_shop(self,profil,shops):
         ''' 
-        preference is a vector containing coefficient telling either the profil prefers time, money, quality, etc. 
-        return a tuple with the shop where the best price is found and the price
+        return a tuple with the shop where the best (price,distance) is found and the (price,distance)
         '''
         food_to_purchase = errand(self.food_needed(profil))
         best_price = np.inf
-        best_shop = -1
+        best_distance = np.inf
+        best_id = -1
         for i in range(len(shops)):
             try:
-                p = food_to_purchase.price(shops[i])
+                pri = food_to_purchase.price(shops[i])
                 ## Here we can introduce additional costs in the price (routes, fuel, etc.)
-                if p < best_price:
-                    best_shop = i
-                    best_price = p
+                cost = profil.coefs[p]*pri + profil.coefs[p+1]*shops[i].distance
+                if cost < profil.coefs[p]*best_price + profil.coefs[p+1]*best_distance:
+                    best_id = i
+                    best_price = pri
+                    best_distance = shops[i].distance
             except ProductNotAvailable:
                 pass
-        if best_shop != -1:
-            return (best_shop, best_price)
+        if best_id != -1:
+            return (best_id, best_price, best_distance)
         else:
             raise NoWhereToBuy
             
@@ -165,13 +166,14 @@ class recipe:
                 res[j-1] = res[j-1] + df_food.iloc[l[0]][j]
         return res      
 
-    def recipe_value(self,profil):
-        value = 0 
-        # First, we determine the value due to the nutritive properties of the foods in the recipe
-        # i=0,...,p-1 in coefs
-        value = value + np.dot(self.food_value, profil.coefs[:p])
-        # Then, we determine the value due to the errand, the route and the budget
-        value = value 
+    # def recipe_value(self,profil,shops):
+    #     value = 0 
+    #     # First, we determine the value due to the nutritive properties of the foods in the recipe
+    #     # i=0,...,p-1 in coefs
+    #     value = value + np.dot(self.food_value, profil.coefs[:p])
+    #     # Then, we determine the value due to the errand, the route and the budget
+    #     try:
+    #         value = value + np.dot(profil.coefs[p:],np.array([]))
             
         
         
