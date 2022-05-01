@@ -51,10 +51,11 @@ while next_page_token:                                                  # Places
 
 df = pd.DataFrame(grocery_stores_list)
 
-
 grocery_names = df.filter(['name'])
 grocery_stores = df.filter(['geometry'])
+
 n = len(grocery_names)
+
 grocery_stores_locations = [[
     grocery_names['name'][i],
     grocery_stores['geometry'][i]['location']['lat'],
