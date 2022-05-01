@@ -8,7 +8,6 @@ from math import *
 #  Energy, fat, saturated fatty acid, carbohydrates, sugar, protein, lipid
 dict_food = { "name" : ["pasta","rice","tomato"],
               "energy" : [566,615,81.1],
-              "saturated_fatty_acid" : [0.34, 0.076, 0.056],
               "carbohydrates" : [23, 31.8,2.49],
               "sugar" : [0.8, 0.2, 2.48],
               "protein" : [4.57, 2.92,0.86],
@@ -59,7 +58,7 @@ dict_shops = { "name" : ["Casino", "Leclerc", "Franprix"],
 df_shops = pd.DataFrame(dict_shops)
 
 ### Constants : 
-p = 7
+p = 5
 d = 10
 
 
@@ -141,6 +140,7 @@ class recipe:
         for i in range(len(shops)):
             try:
                 pri = food_to_purchase.price(shops[i])
+                print(pri)
                 ## Here we can introduce additional costs in the price (routes, fuel, etc.)
                 cost = profil.coefs[p]*pri + profil.coefs[p+1]*shops[i].distance
                 if cost < profil.coefs[p]*best_price + profil.coefs[p+1]*best_distance:
@@ -149,7 +149,7 @@ class recipe:
                     best_distance = shops[i].distance
             except ProductNotAvailable:
                 pass
-        if best_id != -1:
+        if best_id != -1 or profil.coefs[p:] == [0,0]:
             return (best_id, best_price, best_distance)
         else:
             raise NoWhereToBuy
@@ -166,17 +166,45 @@ class recipe:
                 res[j-1] = res[j-1] + df_food.iloc[l[0]][j]
         return res      
 
-    # def recipe_value(self,profil,shops):
-    #     value = 0 
-    #     # First, we determine the value due to the nutritive properties of the foods in the recipe
-    #     # i=0,...,p-1 in coefs
-    #     value = value + np.dot(self.food_value, profil.coefs[:p])
-    #     # Then, we determine the value due to the errand, the route and the budget
-    #     try:
-    #         value = value + np.dot(profil.coefs[p:],np.array([]))
-            
+    def recipe_value(self,profil,shops):
+        value = 0 
+        # First, we determine the value due to the nutritive properties of the foods in the recipe
+        # i=0,...,p-1 in coefs
+        value = value + np.dot(self.food_value(), profil.coefs[:p])
+        # Then, we determine the value due to the errand, the route and the budget
+        try:
+            value = value + np.dot(profil.coefs[p:],np.array(self.best_shop(profil,shops)[1:]))
+            return value 
+        except NoWhereToBuy:
+            return np.inf
         
         
+user_test = user(health = {}, adress = "", budget = 100, 
+                 fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}),
+                 coefficients = [0,0,0,0.2,0.3,0,0.5,0,0]) 
+
+
+store_test0 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+                                  "quantity" : [210,203,5],
+                                  "price" : [1, 0.75, 0.4],
+                                  "expiry_date" : ["","",""] }  )
+                               , 11)
+store_test1 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+                                  "quantity" : [240,212,6],
+                                  "price" : [0.9, 1.25, 0.6],
+                                  "expiry_date" : ["","",""] }  ) 
+                                , 8)
+                   
+recipe_test = recipe(df_recipes["ingredients"][1], df_recipes["prep_time"][1],df_recipes["guests"][1] )
+
+print(recipe_test.recipe_value(user_test,[store_test0,store_test1]))
+
+recipe_test.best_shop(user_test,[store_test0,store_test1])
+
+
+
+
+
             
 class errand:
     '''
