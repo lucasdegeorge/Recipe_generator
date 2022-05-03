@@ -5,12 +5,12 @@ from math import *
 
 ### Databases
 
-#  Energy, fat, saturated fatty acid, carbohydrates, sugar, protein, lipid
+#  Energy, protein, carbohydrates, sugar, lipid
 dict_food = { "name" : ["pasta","rice","tomato"],
               "energy" : [566,615,81.1],
+              "protein" : [4.57, 2.92,0.86],
               "carbohydrates" : [23, 31.8,2.49],
               "sugar" : [0.8, 0.2, 2.48],
-              "protein" : [4.57, 2.92,0.86],
               "lipid" : [2, 0.41, 0.26],
               }
 df_food = pd.DataFrame(dict_food)
@@ -137,19 +137,19 @@ class recipe:
         best_price = np.inf
         best_distance = np.inf
         best_id = -1
+        best_value = profil.coefs[p]*best_price + profil.coefs[p+1]*best_distance
         for i in range(len(shops)):
             try:
                 pri = food_to_purchase.price(shops[i])
-                print(pri)
-                ## Here we can introduce additional costs in the price (routes, fuel, etc.)
                 cost = profil.coefs[p]*pri + profil.coefs[p+1]*shops[i].distance
-                if cost < profil.coefs[p]*best_price + profil.coefs[p+1]*best_distance:
+                if cost < best_value or isnan(best_value):
                     best_id = i
                     best_price = pri
                     best_distance = shops[i].distance
+                    best_value = profil.coefs[p]*best_price + profil.coefs[p+1]*best_distance
             except ProductNotAvailable:
                 pass
-        if best_id != -1 or profil.coefs[p:] == [0,0]:
+        if best_id != -1:
             return (best_id, best_price, best_distance)
         else:
             raise NoWhereToBuy
@@ -164,7 +164,7 @@ class recipe:
             # For each energy, fat, etc ...
             for j in range(1,len(df_food.columns)):
                 res[j-1] = res[j-1] + df_food.iloc[l[0]][j]
-        return res      
+        return res   
 
     def recipe_value(self,profil,shops):
         value = 0 
@@ -178,34 +178,7 @@ class recipe:
         except NoWhereToBuy:
             return np.inf
         
-        
-user_test = user(health = {}, adress = "", budget = 100, 
-                 fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}),
-                 coefficients = [0,0,0,0.2,0.3,0,0.5,0,0]) 
-
-
-store_test0 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                                  "quantity" : [210,203,5],
-                                  "price" : [1, 0.75, 0.4],
-                                  "expiry_date" : ["","",""] }  )
-                               , 11)
-store_test1 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                                  "quantity" : [240,212,6],
-                                  "price" : [0.9, 1.25, 0.6],
-                                  "expiry_date" : ["","",""] }  ) 
-                                , 8)
-                   
-recipe_test = recipe(df_recipes["ingredients"][1], df_recipes["prep_time"][1],df_recipes["guests"][1] )
-
-print(recipe_test.recipe_value(user_test,[store_test0,store_test1]))
-
-recipe_test.best_shop(user_test,[store_test0,store_test1])
-
-
-
-
-
-            
+           
 class errand:
     '''
     shopping_list is a dataframe which contains data (name, quantity) on a specific food 
