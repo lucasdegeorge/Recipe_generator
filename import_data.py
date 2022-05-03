@@ -85,7 +85,7 @@ dict_vegetables = {"name" : ['Artichoke','Asparagus','Avocado','Beetroot','Brocc
 }
                       
 df_vegetables = pd.DataFrame(dict_vegetables)
-print(df_vegetables)
+#print(df_vegetables)
 
 ### Fruits 
 dict_fruits = {"name" : ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Blackberry', 'Cherry', 'Clementine', 'Melon', 'Strawberry', 'Watermelon' ],
@@ -97,7 +97,7 @@ dict_fruits = {"name" : ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Blackberry'
 }
 
 df_fruits = pd.DataFrame(dict_fruits)
-print(df_fruits)
+#print(df_fruits)
 
 ### Meats eggs and fish
 
@@ -107,7 +107,7 @@ df_mef=pd.DataFrame.from_dict({"name":['Red Meat', 'White meat' ,'Salmon','Tuna'
                      "carbohydrates":[0,0,0,0,0],
                      "sugar":[0,0,0,0,0],
                      "lipid":[10,6.5,12.5,0.4,11],})
-print(df_mef)
+#print(df_mef)
 
 ### Cereal
 
@@ -118,7 +118,7 @@ df_Cereal=pd.DataFrame.from_dict({"name":['Rice', 'Pasta' ,'Oat flakes','Bread']
                      "sugar":[0.2,0.6,1.2,2.3],
                      "lipid":[0.41,0.5,7,1.4],})
 
-print(df_Cereal)
+#print(df_Cereal)
 
 ### Fats and Oils
 
@@ -128,5 +128,5 @@ df_fat=pd.DataFrame.from_dict({"name":['Butter','Olive oil'],
                      "carbohydrates":[1,0],
                      "sugar":[1,0],
                      "lipid":[81,99]})
-print(df_fat)
+#print(df_fat)
     
