@@ -77,20 +77,41 @@ class user:
         self.fridge = fridge
         self.coefs = coefficients
         
-    def which_recipe(self, recipes, shops):
+    def which_recipe(self):
         '''
-        coefficients is a vector containing the preferences of the user (energy, protein, bio, money, time, etc.)
+        Determine the best recipe to eat
         '''
+        recipes = recipe_generator()
+        shops = nearest_shops(self)
         best_recipe = -1
         best_value = (-1)*np.inf 
         for i in range(len(recipes)):
-            if recipes[i].recipe_value(self) > best_value:
+            if recipes[i].recipe_value(self,shops) > best_value:
                 best_recipe = i
                 best_value = recipes[i].recipe_value(self)
         if best_recipe != -1:
-            return (best_recipe, best_value)
+            return (recipes[best_recipe], best_value)
         else:
             raise NoRecipeFound
+            
+    def nearest_shops(self):
+        supermarkets = find_supermarkets(self.adress)
+        return shops_and_stocks(supermarkets, list_of_ingredients)
+        
+        
+profil = user([], "28 boulevard Gaspard Monge, Palaiseau 91120", 0, 
+              recipe_generator(), [0.14,0.14,0.14,0.14,0.14,0.14,0.14])
+
+print(profil.which_recipe())
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 class shop:
