@@ -11,24 +11,6 @@ import matplotlib.pyplot as plt
 from math import * 
 import random as rd
 
-## Food 
-
-dict_food = {}
-
-dict_food["name"] = dict_vegetables.get("name") + dict_fruits.get("name") + dict_mef.get("name") + dict_cereal.get("name") + dict_fat.get("name")
-
-dict_food["energy"] = dict_vegetables.get("energy") + dict_fruits.get("energy") + dict_mef.get("energy") + dict_cereal.get("energy") + dict_fat.get("energy")
-
-dict_food["protein"] = dict_vegetables.get("protein") + dict_fruits.get("protein") + dict_mef.get("protein") + dict_cereal.get("protein") + dict_fat.get("protein")
-
-dict_food["carbohydrates"] = dict_vegetables.get("carbohydrates") + dict_fruits.get("carbohydrates") + dict_mef.get("carbohydrates") + dict_cereal.get("carbohydrates") + dict_fat.get("carbohydrates")
-
-dict_food["sugar"] = dict_vegetables.get("sugar") + dict_fruits.get("sugar") + dict_mef.get("sugar") + dict_cereal.get("sugar") + dict_fat.get("sugar")
-
-dict_food["lipid"] = dict_vegetables.get("lipid") + dict_fruits.get("lipid") + dict_mef.get("lipid") + dict_cereal.get("lipid") + dict_fat.get("lipid")
-              
-df_food = pd.DataFrame(dict_food)
-
 
 ######## Ingredients Data #########
 
@@ -94,6 +76,27 @@ dict_fat = {"name":['Butter','Olive oil'],
 
 df_fat=pd.DataFrame.from_dict(dict_fat)
 #print(df_fat)
+
+
+## Food 
+
+dict_food = {}
+
+dict_food["name"] = dict_vegetables.get("name") + dict_fruits.get("name") + dict_mef.get("name") + dict_cereal.get("name") + dict_fat.get("name")
+
+dict_food["energy"] = dict_vegetables.get("energy") + dict_fruits.get("energy") + dict_mef.get("energy") + dict_cereal.get("energy") + dict_fat.get("energy")
+
+dict_food["protein"] = dict_vegetables.get("protein") + dict_fruits.get("protein") + dict_mef.get("protein") + dict_cereal.get("protein") + dict_fat.get("protein")
+
+dict_food["carbohydrates"] = dict_vegetables.get("carbohydrates") + dict_fruits.get("carbohydrates") + dict_mef.get("carbohydrates") + dict_cereal.get("carbohydrates") + dict_fat.get("carbohydrates")
+
+dict_food["sugar"] = dict_vegetables.get("sugar") + dict_fruits.get("sugar") + dict_mef.get("sugar") + dict_cereal.get("sugar") + dict_fat.get("sugar")
+
+dict_food["lipid"] = dict_vegetables.get("lipid") + dict_fruits.get("lipid") + dict_mef.get("lipid") + dict_cereal.get("lipid") + dict_fat.get("lipid")
+              
+df_food = pd.DataFrame(dict_food)
+
+
 
 ## List of ingredients
 
