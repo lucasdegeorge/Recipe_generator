@@ -11,68 +11,24 @@ import matplotlib.pyplot as plt
 from math import * 
 import random as rd
 
-## Data for unit tests 
+## Food 
 
-dict_food = { "name" : ["pasta","rice","tomato"],
-              "energy" : [566,615,81.1],
-              "saturated_fatty_acid" : [0.34, 0.076, 0.056],
-              "carbohydrates" : [23, 31.8,2.49],
-              "sugar" : [0.8, 0.2, 2.48],
-              "protein" : [4.57, 2.92,0.86],
-              "lipid" : [2, 0.41, 0.26],
-              }
+dict_food = {}
+
+dict_food["name"] = dict_vegetables.get("name") + dict_fruits.get("name") + dict_mef.get("name") + dict_cereal.get("name") + dict_fat.get("name")
+
+dict_food["energy"] = dict_vegetables.get("energy") + dict_fruits.get("energy") + dict_mef.get("energy") + dict_cereal.get("energy") + dict_fat.get("energy")
+
+dict_food["protein"] = dict_vegetables.get("protein") + dict_fruits.get("protein") + dict_mef.get("protein") + dict_cereal.get("protein") + dict_fat.get("protein")
+
+dict_food["carbohydrates"] = dict_vegetables.get("carbohydrates") + dict_fruits.get("carbohydrates") + dict_mef.get("carbohydrates") + dict_cereal.get("carbohydrates") + dict_fat.get("carbohydrates")
+
+dict_food["sugar"] = dict_vegetables.get("sugar") + dict_fruits.get("sugar") + dict_mef.get("sugar") + dict_cereal.get("sugar") + dict_fat.get("sugar")
+
+dict_food["lipid"] = dict_vegetables.get("lipid") + dict_fruits.get("lipid") + dict_mef.get("lipid") + dict_cereal.get("lipid") + dict_fat.get("lipid")
+              
 df_food = pd.DataFrame(dict_food)
 
-df_r1 = pd.DataFrame( { "ingredient" : ["pasta", "tomato"],
-                        "quantity" : [150, 2] } )
-
-df_r2 = pd.DataFrame( { "ingredient" : ["rice", "tomato"],
-                        "quantity" : [200, 2] } )
-
-df_r3 = pd.DataFrame( { "ingredient" : ["pasta", "rice"],
-                        "quantity" : [100, 100] } )
-
-dict_recipes = { "name" : ["tomato_pastas", "tomato_rice", "rice_pastas"],
-                 "ingredients" : [ df_r1, df_r2, df_r3 ],
-                 "prep_time" : [20, 20, 30],
-                 "guests" : [1,1,1]
-                }
-
-df_recipes = pd.DataFrame(dict_recipes)
-
-df_s1 = pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                     "quantity" : [20,3,1],
-                     "price" : [1, 0.75, 0.4],
-                     "expiry_date" : ["","",""]
-                         }  ) 
-
-df_s2 =  pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                     "quantity" : [1,12,6],
-                     "price" : [0.9, 1.25, 0.6],
-                     "expiry_date" : ["","",""]
-                         }  ) 
-
-df_s3 =  pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                     "quantity" : [4,16,23],
-                     "price" : [1.2, 1, 0.5],
-                     "expiry_date" : ["","",""]
-                         }  ) 
-dict_shops = { "name" : ["Casino", "Leclerc", "Franprix"],
-               "adress" : ["","",""],
-               "hours" : ["","",""],
-               "stocks" : [ df_s1, df_s2, df_s3 ] 
-               }
-               
-df_shops = pd.DataFrame(dict_shops)
-
-grocery = [('Rapidmarket', '6.0 km', '11 mins'), 
-           ('G 20 Supermarche', '9.4 km', '11 mins'),
-           ('Your Saclay Market supermarket', '4.0 km', '7 mins'),
-           ('Alimentation général Proxi', '7.8 km', '13 mins'),
-           ('Djouher Market', '6.4 km', '11 mins'),
-           ('Franprix', '4.5 km', '8 mins'),
-           ('Superette De La Gare', '5.7 km', '9 mins'),
-           ('Carrefour Express', '10.3 km', '11 mins')]
 
 ######## Ingredients Data #########
 
@@ -102,34 +58,44 @@ df_fruits = pd.DataFrame(dict_fruits)
 
 ### Meats eggs and fish
 
-df_mef=pd.DataFrame.from_dict({"name":['Red Meat', 'White meat' ,'Salmon','Tuna','Mackerel'],
+dict_mef = {"name":['Red Meat', 'White meat' ,'Salmon','Tuna','Mackerel'],
                      "energy":[195,173,205,111,189],
                      "protein":[26,28,23,26.8,21],
                      "carbohydrates":[0,0,0,0,0],
                      "sugar":[0,0,0,0,0],
-                     "lipid":[10,6.5,12.5,0.4,11],})
+                     "lipid":[10,6.5,12.5,0.4,11],}
+
+
+df_mef=pd.DataFrame.from_dict(dict_mef)
 #print(df_mef)
 
 ### Cereal
 
-df_Cereal=pd.DataFrame.from_dict({"name":['Rice', 'Pasta' ,'Oat flakes','Bread'],
+dict_cereal = {"name":['Rice', 'Pasta' ,'Oat flakes','Bread'],
                      "energy":[145,126,378,287],
                      "protein":[3,4,17,8],
                      "carbohydrates":[31,25,55,58],
                      "sugar":[0.2,0.6,1.2,2.3],
-                     "lipid":[0.41,0.5,7,1.4],})
+                     "lipid":[0.41,0.5,7,1.4],}
+
+df_Cereal=pd.DataFrame.from_dict(dict_cereal)
 
 #print(df_Cereal)
 
 ### Fats and Oils
 
-df_fat=pd.DataFrame.from_dict({"name":['Butter','Olive oil'],
+dict_fat = {"name":['Butter','Olive oil'],
                      "energy":[741,900],
                      "protein":[1,0.1],
                      "carbohydrates":[1,0],
                      "sugar":[1,0],
-                     "lipid":[81,99]})
+                     "lipid":[81,99]}
+
+
+df_fat=pd.DataFrame.from_dict(dict_fat)
 #print(df_fat)
+
+## List of ingredients
 
 list_of_ingredients = ['Butter','Olive oil','Rice', 'Pasta' ,'Oat flakes','Bread',
                        'Apple', 'Apricot', 'Banana', 'Blueberry', 'Blackberry',
@@ -211,9 +177,6 @@ def recipe_generator(tries = 100):
                       0, 0)  )
     
     return res
-
-
-
 
 
     
