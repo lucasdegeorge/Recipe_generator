@@ -5,57 +5,6 @@ from math import *
 
 ### Databases
 
-#  Energy, protein, carbohydrates, sugar, lipid
-dict_food = { "name" : ["pasta","rice","tomato"],
-              "energy" : [566,615,81.1],
-              "protein" : [4.57, 2.92,0.86],
-              "carbohydrates" : [23, 31.8,2.49],
-              "sugar" : [0.8, 0.2, 2.48],
-              "lipid" : [2, 0.41, 0.26],
-              }
-df_food = pd.DataFrame(dict_food)
-
-df_r1 = pd.DataFrame( { "ingredient" : ["pasta", "tomato"],
-                        "quantity" : [150, 2] } )
-
-df_r2 = pd.DataFrame( { "ingredient" : ["rice", "tomato"],
-                        "quantity" : [200, 2] } )
-
-df_r3 = pd.DataFrame( { "ingredient" : ["pasta", "rice"],
-                        "quantity" : [100, 100] } )
-
-dict_recipes = { "name" : ["tomato_pastas", "tomato_rice", "rice_pastas"],
-                 "ingredients" : [ df_r1, df_r2, df_r3 ],
-                 "prep_time" : [20, 20, 30],
-                 "guests" : [1,1,1]
-                }
-
-df_recipes = pd.DataFrame(dict_recipes)
-
-df_s1 = pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                     "quantity" : [150,3,2],
-                     "price" : [1, 0.75, 0.4],
-                     "expiry_date" : ["","",""]
-                         }  ) 
-
-df_s2 =  pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                     "quantity" : [210,12,6],
-                     "price" : [0.9, 1.25, 0.6],
-                     "expiry_date" : ["","",""]
-                         }  ) 
-
-df_s3 =  pd.DataFrame( {"name" : ["pasta","rice","tomato"],
-                     "quantity" : [400,16,23],
-                     "price" : [1.2, 1, 0.5],
-                     "expiry_date" : ["","",""]
-                         }  ) 
-dict_shops = { "name" : ["Casino", "Leclerc", "Franprix"],
-               "adress" : ["","",""],
-               "hours" : ["","",""],
-               "stocks" : [ df_s1, df_s2, df_s3 ] 
-               }
-               
-df_shops = pd.DataFrame(dict_shops)
 
 ### Constants : 
 p = 5
@@ -77,42 +26,35 @@ class user:
         self.fridge = fridge
         self.coefs = coefficients
         
+    def nearest_shops(self):
+        supermarkets = find_supermarkets(self.adress)
+        return shops_and_stocks(supermarkets, list_of_ingredients)
+        
     def which_recipe(self):
         '''
         Determine the best recipe to eat
         '''
         recipes = recipe_generator()
-        shops = nearest_shops(self)
+        shops = self.nearest_shops()
         best_recipe = -1
         best_value = (-1)*np.inf 
         for i in range(len(recipes)):
             if recipes[i].recipe_value(self,shops) > best_value:
                 best_recipe = i
-                best_value = recipes[i].recipe_value(self)
+                best_value = recipes[i].recipe_value(self,shops)
         if best_recipe != -1:
-            return (recipes[best_recipe], best_value)
+            return (recipes[best_recipe], best_value, best_recipe)
         else:
             raise NoRecipeFound
             
-    def nearest_shops(self):
-        supermarkets = find_supermarkets(self.adress)
-        return shops_and_stocks(supermarkets, list_of_ingredients)
-        
-        
-profil = user([], "28 boulevard Gaspard Monge, Palaiseau 91120", 0, 
-              recipe_generator(), [0.14,0.14,0.14,0.14,0.14,0.14,0.14])
 
-print(profil.which_recipe())
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+fridge_t = recipe_generator(tries=1)[0].ingredients
+fridge_t.rename(columns = {"ingredient":"name"}, inplace = True) 
+        
+profil = user([], "28 boulevard Gaspard Monge, Palaiseau 91120", 0, fridge_t
+                , [0.14,0.14,0.14,0.14,0.14,0.14,0.14])
+
+
 
 class shop:
     ''' 
@@ -121,8 +63,10 @@ class shop:
     def __init__(self, name, stocks, distance, time):
         self.name = name
         self.stocks = stocks
-        self.distance = distance
+        self.distance = float(distance[:-3])
         self.time = time
+        
+        
 
 
 class recipe:
@@ -176,16 +120,16 @@ class recipe:
         else:
             raise NoWhereToBuy
             
-    def food_value(self):
+    def food_value(self, df = df_food):
         '''
         return a list containing the sum of the values of energy, fat, etc of the foods of the recipe
         '''
-        res = np.zeros(len(df_food.columns)-1)
+        res = np.zeros(len(df.columns)-1)
         for i in self.ingredients.index:
-            l = df_food.index[ df_food["name"] == self.ingredients["ingredient"][i] ].tolist()
+            l = df.index[ df["name"] == self.ingredients["ingredient"][i] ].tolist()
             # For each energy, fat, etc ...
-            for j in range(1,len(df_food.columns)):
-                res[j-1] = res[j-1] + df_food.iloc[l[0]][j]
+            for j in range(1,len(df.columns)):
+                res[j-1] = res[j-1] + df.iloc[l[0]][j]
         return res   
 
     def recipe_value(self,profil,shops):
@@ -221,6 +165,14 @@ class errand:
             except IndexError:
                 raise ProductNotAvailable
         return p
+        
+a = profil.which_recipe()
+
+#b = profil.nearest_shops()
+
+print(a[0].ingredients)
+print(a[1])
+print(a[2])
 
 ## Exception 
 
