@@ -26,7 +26,7 @@ profil = user([], "28 boulevard Gaspard Monge, Palaiseau 91120", 0,
               recipe_generator(), [0.14,0.14,0.14,0.14,0.14,0.14,0.14])
 
 
-def select_recipe():
+    
     
 
 
