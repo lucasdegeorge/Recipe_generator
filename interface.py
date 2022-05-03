@@ -366,18 +366,28 @@ def MacroCalculatorPage():
                 sugar+= float(row['sugar'])*qt / 100
         return energy , protein , fat, carbohydrates, sugar
     def display_results(list):
+        global NutriBoys
         x=Calc_Intake(list)
-        root = Tk()
-        Label(root, text = "energy").grid(row = 0, column=0)
-        Label(root, text = x[0]).grid(row = 0, column=1)
-        Label(root, text = "protein").grid(row = 1, column=0)
-        Label(root, text = x[1]).grid(row = 1, column=1)
-        Label(root, text = "fat").grid(row = 2, column=0)
-        Label(root, text = x[2]).grid(row = 2, column=1)
-        Label(root, text = "carbohydrates").grid(row = 3, column=0)
-        Label(root, text = x[3]).grid(row = 3, column=1)
-        Label(root, text = "sugar").grid(row = 4, column=0)
-        Label(root, text = x[4]).grid(row = 4, column=1)
+        NutriBoys.destroy()
+        NutriBoys = Tk()
+        NutriBoys.geometry("600x400")
+        Label(NutriBoys, text = "energy").grid(row = 0, column=0)
+        Label(NutriBoys, text = x[0]).grid(row = 0, column=1)
+        Label(NutriBoys, text = "protein").grid(row = 1, column=0)
+        Label(NutriBoys, text = x[1]).grid(row = 1, column=1)
+        Label(NutriBoys, text = "fat").grid(row = 2, column=0)
+        Label(NutriBoys, text = x[2]).grid(row = 2, column=1)
+        Label(NutriBoys, text = "carbohydrates").grid(row = 3, column=0)
+        Label(NutriBoys, text = x[3]).grid(row = 3, column=1)
+        Label(NutriBoys, text = "sugar").grid(row = 4, column=0)
+        Label(NutriBoys, text = x[4]).grid(row = 4, column=1)
+        Button(
+            NutriBoys,
+            text = 'Menu Page',
+            font = font,
+            command= MenuPage
+        ).grid(row = 5, column=1)
+        NutriBoys.mainloop()
     def getInput():
         i_1 = Ingr1.get()
         q_1 = qt1.get()
@@ -499,7 +509,12 @@ def MacroCalculatorPage():
     qt8.grid(row = 7, column = 3)
     Button(root, text = "submit",
            command = lambda:[getInput(),display_results(params)]).grid(row = 8, column=0)
-           
+        Button(
+        NutriBoys,
+        text = 'Menu Page',
+        font = font,
+        command= MenuPage
+    ).grid(row = 8, column=2)       
     root.mainloop()
 
 ### Initialization
