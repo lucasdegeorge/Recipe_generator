@@ -138,7 +138,7 @@ quantity_max = 200
 
 def shops_and_stocks(list_shops,ingredients):
     '''
-    
+    return a list of shops (class object) 
     '''
     res = []
     experity_date = ["" for i in range(len(ingredients))]
@@ -163,5 +163,48 @@ def shops_and_stocks(list_shops,ingredients):
 # Test 
 # L = [('Rapidmarket', '6.0 km', '11 mins'), ('Franprix', '4.5 km', '8 mins'), ('G 20 Supermarche', '9.4 km', '11 mins'), ('Franprix', '4.0 km', '7 mins')]
 # shops_and_stocks( L , ["pasta","rice","tomato"] )[0].stocks
+
+def recipe_generator():
+    ingredients = []
+    quantities = []
+    
+    # Vegetables
+    nb = rd.randint(1,2)
+    n = len(df_vegetables.index)
+    for i in range(nb):
+        ingredients.append(df_vegetables["name"].iloc[rd.randint(0,n-1)])
+        quantities.append(rd.randint(0,quantity_max))
+        
+    # Meats eggs and fish
+    n = len(df_mef.index)
+    ingredients.append(df_mef["name"].iloc[rd.randint(0,n-1)])
+    quantities.append(rd.randint(0,quantity_max))
+    
+    # Cereal 
+    n = len(df_Cereal.index)
+    ingredients.append(df_Cereal["name"].iloc[rd.randint(0,n-1)])
+    quantities.append(rd.randint(0,quantity_max))  
+        
+    # Fruits 
+    n = len(df_fruits.index)
+    ingredients.append(df_fruits["name"].iloc[rd.randint(0,n-1)])
+    quantities.append(rd.randint(0,quantity_max))
+    
+    # Fat 
+    n = len(df_fat.index)
+    ingredients.append(df_fat["name"].iloc[rd.randint(0,n-1)])
+    quantities.append(rd.randint(0,quantity_max))
+    
+    return recipe( pd.DataFrame({ "ingredient" : ingredients,
+                          "quantity" : quantities }), 
+                  0, 0)
+
+
+
+
+    
+    
+        
+    
 
     
