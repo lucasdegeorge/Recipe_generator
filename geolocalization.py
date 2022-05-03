@@ -99,6 +99,10 @@ def find_supermarkets(adress, radius = 4e3):
   user_location = geolocator.geocode(adress)                          
   user_coords = (user_location.latitude, user_location.longitude)
   
+  search_string = 'Supermarket'                         
+  distance = radius
+  grocery_stores_list = []
+  
   # We determine the nearest supermarkets
   grocery_request = map_client.places_nearby(location = user_coords,                                            
                                              keyword = search_string,                                            
@@ -151,6 +155,6 @@ def find_supermarkets(adress, radius = 4e3):
   
 # Test : 
 
-#(find_supermarkets('27 Boulevard Thomas Gobert, Palaiseau 91120'))
+c = find_supermarkets('27 Boulevard Thomas Gobert, Palaiseau 91120')
 
 
