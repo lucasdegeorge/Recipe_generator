@@ -33,6 +33,7 @@ class user:
     def which_recipe(self):
         '''
         Determine the best recipe to eat
+        Return the recipe (class object) which gets the best value, the shop where to buy and the errand
         '''
         recipes = recipe_generator()
         shops = self.nearest_shops()
@@ -43,10 +44,13 @@ class user:
                 best_recipe = i
                 best_value = recipes[i].recipe_value(self,shops)
         if best_recipe != -1:
-            return (recipes[best_recipe], best_value, best_recipe)
+            shop_id = recipes[best_recipe].best_shop(self,shops)[0]
+            return (recipes[best_recipe]  , shops[shop_id], 
+                    recipes[best_recipe].food_needed(self) )
         else:
             raise NoRecipeFound
             
+
 
 
 class shop:
@@ -166,17 +170,18 @@ fridge_t = recipe_generator(tries=1)[0].ingredients
 fridge_t.rename(columns = {"ingredient":"name"}, inplace = True) 
         
 profil = user([], "28 boulevard Gaspard Monge, Palaiseau 91120", 0, fridge_t
-                , [0,0,0,0.14,0.14,0.14,0.14])
+                , [0.14,0.14,0.14,0.14,0.14,0.14,0.14])
 
 
         
-a = profil.which_recipe()
+A = profil.which_recipe()
 
-#b = profil.nearest_shops()
 
-print(a[0].ingredients)
-print(a[1])
-print(a[2])
+print(A[0].ingredients)
+print("---")
+print(A[1].name)
+print("---")
+print(A[2])
 
 ## Exception 
 
