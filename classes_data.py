@@ -27,7 +27,7 @@ class user:
         self.coefs = coefficients
         
     def nearest_shops(self):
-        supermarkets = find_supermarkets(self.adress)
+        supermarkets = c    #find_supermarkets(self.adress)
         return shops_and_stocks(supermarkets, list_of_ingredients)
         
     def which_recipe(self):
@@ -47,13 +47,6 @@ class user:
         else:
             raise NoRecipeFound
             
-
-fridge_t = recipe_generator(tries=1)[0].ingredients
-fridge_t.rename(columns = {"ingredient":"name"}, inplace = True) 
-        
-profil = user([], "28 boulevard Gaspard Monge, Palaiseau 91120", 0, fridge_t
-                , [0.14,0.14,0.14,0.14,0.14,0.14,0.14])
-
 
 
 class shop:
@@ -142,7 +135,7 @@ class recipe:
             value = value + np.dot(profil.coefs[p:],np.array(self.best_shop(profil,shops)[1:]))
             return value 
         except NoWhereToBuy:
-            return np.inf
+            return (-1)*np.inf
         
            
 class errand:
@@ -165,6 +158,17 @@ class errand:
             except IndexError:
                 raise ProductNotAvailable
         return p
+
+
+## Test 
+
+fridge_t = recipe_generator(tries=1)[0].ingredients
+fridge_t.rename(columns = {"ingredient":"name"}, inplace = True) 
+        
+profil = user([], "28 boulevard Gaspard Monge, Palaiseau 91120", 0, fridge_t
+                , [0,0,0,0.14,0.14,0.14,0.14])
+
+
         
 a = profil.which_recipe()
 
