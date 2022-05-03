@@ -97,10 +97,11 @@ class shop:
     ''' 
     stocks is a dataframe which contains data (name, quantity, price, expiry_date) on a specific food 
     '''
-    def __init__(self, stocks, coord):
+    def __init__(self, name, stocks, distance, time):
+        self.name = name
         self.stocks = stocks
-        self.hours = []
-        self.distance = coord
+        self.distance = distance
+        self.time = time
 
 
 class recipe:
