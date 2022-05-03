@@ -28,17 +28,17 @@ def unit_tests():
 
 def ut_errand_price1():
     errand_test = errand( pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}) )
-    store_test = shop(df_shops["stocks"][0], 0)
+    store_test = shop("", df_shops["stocks"][0], 0, 0)
     return errand_test.price(store_test) == 12.25
 
 def ut_errand_price2():
     errand_test = errand( pd.DataFrame( {"name" : ["pasta"], "quantity" : [10]}) )
-    store_test = shop(df_shops["stocks"][0], 0)
+    store_test = shop("", df_shops["stocks"][0], 0, 0)
     return errand_test.price(store_test) == 10.0
 
 def ut_errand_price3():
     errand_test = errand( pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,4]}) )
-    store_test = shop(df_shops["stocks"][0], 0)
+    store_test = shop("", df_shops["stocks"][0], 0, 0)
     try:
         errand_test.price(store_test)
         return False
@@ -68,16 +68,16 @@ def ut_recipe_best_shop1():
     user_test = user(health = {}, adress = "", budget = 100, 
                      fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}),
                      coefficients = [0,0,0,0,0,0.5,0.5]) 
-    store_test0 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+    store_test0 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [150,3,2],
                                       "price" : [1, 0.75, 0.4],
                                       "expiry_date" : ["","",""] }  )
-                                   , 11)
-    store_test1 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+                                   , 11, 0)
+    store_test1 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [210,12,6],
                                       "price" : [0.9, 1.25, 0.6],
                                       "expiry_date" : ["","",""] }  ) 
-                                   , 8)
+                                   , 8, 0)
     return recipe_test.best_shop(user_test, [store_test0,store_test1]) == (1, 127.2, 8)
 
 def ut_recipe_best_shop2():
@@ -85,16 +85,16 @@ def ut_recipe_best_shop2():
     user_test = user(health = {}, adress = "", budget = 100, 
                      fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}),
                      coefficients = [0,0,0,0,0,0.5,0.5]) 
-    store_test0 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+    store_test0 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [150,3,2],
                                       "price" : [1, 0.75, 0.4],
                                       "expiry_date" : ["","",""] }  )
-                                   , 11)
-    store_test1 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+                                   , 11, 0)
+    store_test1 = shop("", pd.DataFrame({"name" : ["pasta","rice","tomato"],
                                       "quantity" : [110,12,6],
                                       "price" : [0.9, 1.25, 0.6],
                                       "expiry_date" : ["","",""] }  ) 
-                                   , 8)
+                                   , 8, 0)
     return recipe_test.best_shop(user_test, [store_test0,store_test1]) == (0,140.8, 11)
 
 def ut_recipe_best_shop3():
@@ -102,16 +102,16 @@ def ut_recipe_best_shop3():
     user_test = user(health = {}, adress = "", budget = 100, 
                      fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}),
                      coefficients = [0,0,0,0,0,0.5,0.5]) 
-    store_test0 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+    store_test0 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [120,3,2],
                                       "price" : [1, 0.75, 0.4],
                                       "expiry_date" : ["","",""] }  )
-                                   , 11)
-    store_test1 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+                                   , 11, 0)
+    store_test1 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [110,12,6],
                                       "price" : [0.9, 1.25, 0.6],
                                       "expiry_date" : ["","",""] }  ) 
-                                   , 8)
+                                   , 8, 0)
     try:
         recipe_test.best_shop(user_test, [store_test0,store_test1])
         return False
@@ -127,16 +127,16 @@ def ut_recipe_value1():
     user_test = user(health = {}, adress = "", budget = 100, 
                      fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}),
                      coefficients = [0,0,0,0,0,0.5,0.5]) 
-    store_test0 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+    store_test0 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [150,3,5],
                                       "price" : [1, 0.75, 0.4],
                                       "expiry_date" : ["","",""] }  )
-                      , 11)
-    store_test1 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+                      , 11, 0)
+    store_test1 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [110,12,6],
                                       "price" : [0.9, 1.25, 0.6],
                                       "expiry_date" : ["","",""] }  )
-                       , 8)
+                       , 8, 0)
     recipe_test = recipe(df_recipes["ingredients"][0], df_recipes["prep_time"][0],df_recipes["guests"][0] )
     return recipe_test.recipe_value(user_test,[store_test0,store_test1]) == 75.9
 
@@ -144,16 +144,16 @@ def ut_recipe_value2():
     user_test = user(health = {}, adress = "", budget = 100, 
                      fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}),
                      coefficients = [0,0,0,0,0,0.5,0.5]) 
-    store_test0 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+    store_test0 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [150,3,5],
                                       "price" : [1, 0.75, 0.4],
                                       "expiry_date" : ["","",""] }  )
-                      , 11)
-    store_test1 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+                      , 11, 0)
+    store_test1 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [110,12,6],
                                       "price" : [0.9, 1.25, 0.6],
                                       "expiry_date" : ["","",""] }  )
-                       , 8)
+                       , 8, 0)
     recipe_test = recipe(df_recipes["ingredients"][1], df_recipes["prep_time"][1],df_recipes["guests"][1] )
     return recipe_test.recipe_value(user_test,[store_test0,store_test1]) == np.inf
 
@@ -161,16 +161,16 @@ def ut_recipe_value3():
     user_test = user(health = {}, adress = "", budget = 100, 
                      fridge = pd.DataFrame( {"name" : ["pasta","rice"], "quantity" : [10,3]}),
                      coefficients = [0,0,0,0,0,0.5,0.5]) 
-    store_test0 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+    store_test0 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [150,203,5],
                                       "price" : [1, 0.75, 0.4],
                                       "expiry_date" : ["","",""] }  )
-                      , 11)
-    store_test1 = shop(pd.DataFrame( {"name" : ["pasta","rice","tomato"],
+                      , 11, 0)
+    store_test1 = shop("", pd.DataFrame( {"name" : ["pasta","rice","tomato"],
                                       "quantity" : [110,212,6],
                                       "price" : [0.9, 1.25, 0.6],
                                       "expiry_date" : ["","",""] }  )
-                       , 8)
+                       , 8, 0)
     recipe_test = recipe(df_recipes["ingredients"][1], df_recipes["prep_time"][1],df_recipes["guests"][1] )
     return recipe_test.recipe_value(user_test,[store_test0,store_test1]) == 79.775
 
