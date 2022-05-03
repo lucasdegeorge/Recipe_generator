@@ -131,6 +131,13 @@ df_fat=pd.DataFrame.from_dict({"name":['Butter','Olive oil'],
                      "lipid":[81,99]})
 #print(df_fat)
 
+list_of_ingredients = ['Butter','Olive oil','Rice', 'Pasta' ,'Oat flakes','Bread',
+                       'Apple', 'Apricot', 'Banana', 'Blueberry', 'Blackberry',
+                       'Cherry', 'Clementine', 'Melon', 'Strawberry', 'Watermelon',
+                       'Artichoke','Asparagus','Avocado','Beetroot','Broccoli',
+                       'Carrot','Celeriac','Courgette ','Cucumber','Haricot','Lentil'
+                       ,'Tomato']
+
 ### Generation of the stocks of the supermarkets 
 
 price_max = 15
@@ -161,43 +168,50 @@ def shops_and_stocks(list_shops,ingredients):
     return res 
     
 # Test 
-# L = [('Rapidmarket', '6.0 km', '11 mins'), ('Franprix', '4.5 km', '8 mins'), ('G 20 Supermarche', '9.4 km', '11 mins'), ('Franprix', '4.0 km', '7 mins')]
-# shops_and_stocks( L , ["pasta","rice","tomato"] )[0].stocks
+L = [('Rapidmarket', '6.0 km', '11 mins'), ('Franprix', '4.5 km', '8 mins'), ('G 20 Supermarche', '9.4 km', '11 mins'), ('Franprix', '4.0 km', '7 mins')]
+shops_and_stocks( L , ["pasta","rice","tomato"] )
 
-def recipe_generator():
-    ingredients = []
-    quantities = []
+def recipe_generator(tries = 100):
+    res = []
     
-    # Vegetables
-    nb = rd.randint(1,2)
-    n = len(df_vegetables.index)
-    for i in range(nb):
-        ingredients.append(df_vegetables["name"].iloc[rd.randint(0,n-1)])
+    for i in range(tries):
+    
+        ingredients = []
+        quantities = []
+        
+        # Vegetables
+        nb = rd.randint(1,2)
+        n = len(df_vegetables.index)
+        for i in range(nb):
+            ingredients.append(df_vegetables["name"].iloc[rd.randint(0,n-1)])
+            quantities.append(rd.randint(0,quantity_max))
+            
+        # Meats eggs and fish
+        n = len(df_mef.index)
+        ingredients.append(df_mef["name"].iloc[rd.randint(0,n-1)])
         quantities.append(rd.randint(0,quantity_max))
         
-    # Meats eggs and fish
-    n = len(df_mef.index)
-    ingredients.append(df_mef["name"].iloc[rd.randint(0,n-1)])
-    quantities.append(rd.randint(0,quantity_max))
-    
-    # Cereal 
-    n = len(df_Cereal.index)
-    ingredients.append(df_Cereal["name"].iloc[rd.randint(0,n-1)])
-    quantities.append(rd.randint(0,quantity_max))  
+        # Cereal 
+        n = len(df_Cereal.index)
+        ingredients.append(df_Cereal["name"].iloc[rd.randint(0,n-1)])
+        quantities.append(rd.randint(0,quantity_max))  
+            
+        # Fruits 
+        n = len(df_fruits.index)
+        ingredients.append(df_fruits["name"].iloc[rd.randint(0,n-1)])
+        quantities.append(rd.randint(0,quantity_max))
         
-    # Fruits 
-    n = len(df_fruits.index)
-    ingredients.append(df_fruits["name"].iloc[rd.randint(0,n-1)])
-    quantities.append(rd.randint(0,quantity_max))
+        # Fat 
+        n = len(df_fat.index)
+        ingredients.append(df_fat["name"].iloc[rd.randint(0,n-1)])
+        quantities.append(rd.randint(0,quantity_max))
+        
+        res.append( recipe( pd.DataFrame({ "ingredient" : ingredients,
+                              "quantity" : quantities }), 
+                      0, 0)  )
     
-    # Fat 
-    n = len(df_fat.index)
-    ingredients.append(df_fat["name"].iloc[rd.randint(0,n-1)])
-    quantities.append(rd.randint(0,quantity_max))
-    
-    return recipe( pd.DataFrame({ "ingredient" : ingredients,
-                          "quantity" : quantities }), 
-                  0, 0)
+    return res
+
 
 
 
