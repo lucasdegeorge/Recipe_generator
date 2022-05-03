@@ -175,5 +175,6 @@ def ut_recipe_value3():
     return recipe_test.recipe_value(user_test,[store_test0,store_test1]) == 79.775
 
 
+
 unit_tests()
 
