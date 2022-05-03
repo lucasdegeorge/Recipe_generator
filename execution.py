@@ -15,12 +15,19 @@ import pandas as pd
 #import geopy as gp
 import time 
 
+# Funcitons and classes 
+from classes_data.py import *
+from import_data.py import *
+from geolocalization.py import *
+
 ### User settings 
 
+profil = user([], "28 boulevard Gaspard Monge, Palaiseau 91120", 0, 
+              recipe_generator(), [0.14,0.14,0.14,0.14,0.14,0.14,0.14])
 
 
-### Ingredients data 
-from import_data.py import *
+def select_recipe():
+    
 
 
 
