@@ -28,7 +28,8 @@ class user:
         
     def allergies(self, list_of_allergies, list_of_ingredients):
         for i in range(len(list_of_allergies)):
-            list_of_ingredients.remove(list_of_allergies[i])
+            if list_of_allegies[i] != '':
+                list_of_ingredients.remove(list_of_allergies[i])
         
     def nearest_shops(self):
         supermarkets = c    #find_supermarkets(self.adress)
@@ -189,8 +190,6 @@ fridge_t.rename(columns = {"ingredient":"name"}, inplace = True)
 profil = user([], "28 boulevard Gaspard Monge, Palaiseau 91120", 0, fridge_t
                 , [0.14,0.14,0.14,0.14,0.14,0.14,0.14])
 
-
-        
 A = profil.which_recipe()
 
 
