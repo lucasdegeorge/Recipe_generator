@@ -26,6 +26,10 @@ class user:
         self.fridge = fridge
         self.coefs = coefficients
         
+    def allergies(self, list_of_allergies, list_of_ingredients):
+        for i in range(len(list_of_allergies)):
+            list_of_ingredients.remove(list_of_allergies[i])
+        
     def nearest_shops(self):
         supermarkets = c    #find_supermarkets(self.adress)
         return shops_and_stocks(supermarkets, list_of_ingredients)
@@ -164,6 +168,19 @@ class errand:
         return p
 
 
+## Exception 
+
+class NoRecipeFound(Exception):
+    pass
+
+class NoWhereToBuy(Exception):
+    pass
+
+class ProductNotAvailable(Exception):
+    pass 
+
+
+
 ## Test 
 
 fridge_t = recipe_generator(tries=1)[0].ingredients
@@ -182,14 +199,3 @@ print("---")
 print(A[1].name)
 print("---")
 print(A[2])
-
-## Exception 
-
-class NoRecipeFound(Exception):
-    pass
-
-class NoWhereToBuy(Exception):
-    pass
-
-class ProductNotAvailable(Exception):
-    pass 
