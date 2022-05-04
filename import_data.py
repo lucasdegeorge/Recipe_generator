@@ -182,9 +182,13 @@ def recipe_generator(tries = 100):
     return res
 
 
-    
-    
+def find_coefs(prot):
+    if prot==1:
+        return [0.08, 0.5, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08]
+    else:
+        return [0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14]
         
+
     
 
     
