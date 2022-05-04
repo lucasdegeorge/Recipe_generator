@@ -15,13 +15,12 @@ import geopy as gp
 import time
 
 
-os.chdir("C:/Users/Baptiste/Documents/Projet Python")
+#os.chdir("C:/Users/Baptiste/Documents/Projet Python")
 
 
 ######## Ingredients Data #########
 
-p = 5
-d = 10
+nb_coefs = 5
 
 
 ### Vegetables
@@ -284,16 +283,16 @@ class recipe:
         best_price = np.inf
         best_distance = np.inf
         best_id = -1
-        best_value = profil.coefs[p]*best_price + profil.coefs[p+1]*best_distance
+        best_value = profil.coefs[nb_coefs]*best_price + profil.coefs[nb_coefs+1]*best_distance
         for i in range(len(shops)):
             try:
                 pri = food_to_purchase.price(shops[i])
-                cost = profil.coefs[p]*pri + profil.coefs[p+1]*shops[i].distance
+                cost = profil.coefs[nb_coefs]*pri + profil.coefs[nb_coefs+1]*shops[i].distance
                 if cost < best_value or isnan(best_value):
                     best_id = i
                     best_price = pri
                     best_distance = shops[i].distance
-                    best_value = profil.coefs[p]*best_price + profil.coefs[p+1]*best_distance
+                    best_value = profil.coefs[nb_coefs]*best_price + profil.coefs[nb_coefs+1]*best_distance
             except ProductNotAvailable:
                 pass
         if best_id != -1:
@@ -317,7 +316,7 @@ class recipe:
         value = 0
         # First, we determine the value due to the nutritive properties of the foods in the recipe
         # i=0,...,p-1 in coefs
-        value = value + np.dot(self.food_value(), profil.coefs[:p])
+        value = value + np.dot(self.food_value(), profil.coefs[:nb_coefs])
         # Then, we determine the value due to the errand, the route and the budget
         try:
             value = value + np.dot(profil.coefs[p:],np.array(self.best_shop(profil,shops)[1:]))
@@ -455,7 +454,7 @@ def MenuPage():
     NutriBoys = Tk()
     NutriBoys.geometry("600x400")
     NutriBoys.title("NutriBoys")
-    background_image = PhotoImage(file = "C:\\Users\\Baptiste\\Pictures\\MenuPageBackground.png")
+    background_image = PhotoImage(file = "C:/Users/lucas/Documents/GitHub/projet_python/Pictures/MenuPageBackground.png")
     title_font = ("Times bold", 14)
     font = ("Times bold", 10)
 
@@ -517,7 +516,7 @@ def PreferencesPage():
     NutriBoys = Tk()
     NutriBoys.geometry("400x600")
     NutriBoys.title("NutriBoys")
-    background_image = PhotoImage(file = "C:\\Users\\Baptiste\\Pictures\\user_background.png")
+    background_image = PhotoImage(file = "C:/Users/lucas/Documents/GitHub/projet_python/Pictures/user_background.png")
     title_font = ("Times bold", 14)
     font = ('Times bold', 10)
 
@@ -973,7 +972,7 @@ def MacroCalculatorPage():
     NutriBoys = Tk()
     NutriBoys.geometry("600x400")
     NutriBoys.title("NutriBoys")
-    background_image = PhotoImage(file = "C:\\Users\\Baptiste\\Pictures\\MacroCalculatorPageBackground.png")
+    background_image = PhotoImage(file = "C:/Users/lucas/Documents/GitHub/projet_python/Pictures/MacroCalculatorPageBackground.png")
     title_font = ("Times bold", 14)
     font = ('Times bold', 10)
 
@@ -1149,7 +1148,7 @@ def MacroCalculatorPage():
 NutriBoys = Tk()
 NutriBoys.geometry("600x400")
 NutriBoys.title("NutriBoys")
-background_image = PhotoImage(file = "C:\\Users\\Baptiste\\Pictures\\MenuPageBackground.png")
+background_image = PhotoImage(file = "C:/Users/lucas/Documents/GitHub/projet_python/Pictures/MenuPageBackground.png")
 title_font = ("Times bold", 14)
 font = ("Times bold", 10)
 
