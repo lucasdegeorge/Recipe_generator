@@ -155,6 +155,6 @@ def find_supermarkets(adress, radius = 4e3):
   
 # Test : 
 
-c = find_supermarkets('27 Boulevard Thomas Gobert, Palaiseau 91120')
+# c = find_supermarkets('27 Boulevard Thomas Gobert, Palaiseau 91120')
 
 
