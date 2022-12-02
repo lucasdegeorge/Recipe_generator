@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Apr 14 09:14:38 2022
-
-@author: lucas
-"""
-
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -107,88 +100,5 @@ list_of_ingredients = ['Butter','Olive oil','Rice', 'Pasta' ,'Oat flakes','Bread
                        'Carrot','Celeriac','Courgette ','Cucumber','Haricot','Lentil'
                        ,'Tomato']
 
-### Generation of the stocks of the supermarkets 
-
-price_max = 15
-quantity_max = 200
-
-def shops_and_stocks(list_shops,ingredients):
-    '''
-    return a list of shops (class object) 
-    '''
-    res = []
-    experity_date = ["" for i in range(len(ingredients))]
-    for i in range(len(list_shops)):
-        # giving stocks to the market
-        quantities = []
-        prices = []
-        expery_date = ["" for i in range(len(ingredients))]
-        for j in range(len(ingredients)):
-            quantities.append(rd.randint(0,quantity_max))
-            prices.append(rd.uniform(0,price_max))
-        d = { "name" : ingredients, 
-              "quantity" : quantities,
-              "price" : prices,
-              "expery_date" : expery_date}
-        res.append(shop(list_shops[i][0], 
-                        pd.DataFrame(d), 
-                        list_shops[i][1], 
-                        list_shops[i][2]))
-    return res 
-    
-# Test 
-L = [('Rapidmarket', '6.0 km', '11 mins'), ('Franprix', '4.5 km', '8 mins'), ('G 20 Supermarche', '9.4 km', '11 mins'), ('Franprix', '4.0 km', '7 mins')]
-shops_and_stocks( L , ["pasta","rice","tomato"] )
-
-def recipe_generator(tries = 100):
-    res = []
-    
-    for i in range(tries):
-    
-        ingredients = []
-        quantities = []
-        
-        # Vegetables
-        nb = rd.randint(1,2)
-        n = len(df_vegetables.index)
-        for i in range(nb):
-            ingredients.append(df_vegetables["name"].iloc[rd.randint(0,n-1)])
-            quantities.append(rd.randint(0,quantity_max))
-            
-        # Meats eggs and fish
-        n = len(df_mef.index)
-        ingredients.append(df_mef["name"].iloc[rd.randint(0,n-1)])
-        quantities.append(rd.randint(0,quantity_max))
-        
-        # Cereal 
-        n = len(df_Cereal.index)
-        ingredients.append(df_Cereal["name"].iloc[rd.randint(0,n-1)])
-        quantities.append(rd.randint(0,quantity_max))  
-            
-        # Fruits 
-        n = len(df_fruits.index)
-        ingredients.append(df_fruits["name"].iloc[rd.randint(0,n-1)])
-        quantities.append(rd.randint(0,quantity_max))
-        
-        # Fat 
-        n = len(df_fat.index)
-        ingredients.append(df_fat["name"].iloc[rd.randint(0,n-1)])
-        quantities.append(rd.randint(0,quantity_max))
-        
-        res.append( recipe( pd.DataFrame({ "ingredient" : ingredients,
-                              "quantity" : quantities }), 
-                      0, 0)  )
-    
-    return res
-
-
-def find_coefs(prot):
-    if prot==1:
-        return [0.08, 0.5, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08]
-    else:
-        return [0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14]
-        
-
-    
 
     
