@@ -1,5 +1,3 @@
-### Menu Interface ###
-
 ### Modules ##
 
 from tkinter import *
@@ -14,8 +12,11 @@ import googlemaps as gm
 import geopy as gp
 import time
 
+# A modifier ...
+os.chdir("C:/Users/lucas/Documents/GitHub/projet_python")
 
-#os.chdir("C:/Users/Baptiste/Documents/Projet Python")
+# Pour charger les images ... à modifier ...
+path = "C:/Users/lucas/Documents/GitHub/projet_python/Pictures/"
 
 
 ######## Ingredients Data #########
@@ -124,7 +125,7 @@ adress = '27 Boulevard Thomas Gobert, Palaiseau 91120'
 radius = 4e3
 
 
-def find_supermarkets(adress, radius = 4e3):
+def find_supermarkets(adress, radius = 2e3):
   '''
   return a list of supermarkets with the name, the distance and the estimated travel time
   '''
@@ -319,7 +320,7 @@ class recipe:
         value = value + np.dot(self.food_value(), profil.coefs[:nb_coefs])
         # Then, we determine the value due to the errand, the route and the budget
         try:
-            value = value + np.dot(profil.coefs[p:],np.array(self.best_shop(profil,shops)[1:]))
+            value = value + np.dot(profil.coefs[nb_coefs:],np.array(self.best_shop(profil,shops)[1:]))
             return value
         except NoWhereToBuy:
             return (-1)*np.inf
@@ -454,7 +455,7 @@ def MenuPage():
     NutriBoys = Tk()
     NutriBoys.geometry("600x400")
     NutriBoys.title("NutriBoys")
-    background_image = PhotoImage(file = "C:/Users/lucas/Documents/GitHub/projet_python/Pictures/MenuPageBackground.png")
+    background_image = PhotoImage(file = path+"MenuPageBackground.png")
     title_font = ("Times bold", 14)
     font = ("Times bold", 10)
 
@@ -516,7 +517,7 @@ def PreferencesPage():
     NutriBoys = Tk()
     NutriBoys.geometry("400x600")
     NutriBoys.title("NutriBoys")
-    background_image = PhotoImage(file = "C:/Users/lucas/Documents/GitHub/projet_python/Pictures/user_background.png")
+    background_image = PhotoImage(file = path+"user_background.png")
     title_font = ("Times bold", 14)
     font = ('Times bold', 10)
 
@@ -813,7 +814,7 @@ def MealRequestPage():
 
         NutriBoys.destroy()
         NutriBoys = Tk()
-        profil = user([],adress,0,fridge,find_coefs(MassBuilding))
+        profil = user([],Adress,0,fridge,find_coefs(MassBuilding))
 
         profil.allergies(Allergies,list_of_ingredients)
         recette,store, food_to_buy=profil.which_recipe()
@@ -972,7 +973,7 @@ def MacroCalculatorPage():
     NutriBoys = Tk()
     NutriBoys.geometry("600x400")
     NutriBoys.title("NutriBoys")
-    background_image = PhotoImage(file = "C:/Users/lucas/Documents/GitHub/projet_python/Pictures/MacroCalculatorPageBackground.png")
+    background_image = PhotoImage(file = path+"MacroCalculatorPageBackground.png")
     title_font = ("Times bold", 14)
     font = ('Times bold', 10)
 
@@ -1148,7 +1149,7 @@ def MacroCalculatorPage():
 NutriBoys = Tk()
 NutriBoys.geometry("600x400")
 NutriBoys.title("NutriBoys")
-background_image = PhotoImage(file = "C:/Users/lucas/Documents/GitHub/projet_python/Pictures/MenuPageBackground.png")
+background_image = PhotoImage(file = path+"MenuPageBackground.png")
 title_font = ("Times bold", 14)
 font = ("Times bold", 10)
 
