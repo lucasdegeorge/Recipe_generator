@@ -1,9 +1,15 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Apr 19 17:44:15 2022
 
-@author: lucas
-"""
+
+from ttkwidgets.autocomplete import AutocompleteCombobox
+import random as rd
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from math import *
+import googlemaps as gm
+import geopy as gp
+import time
+
 
 ## Data for the unit tests 
 
