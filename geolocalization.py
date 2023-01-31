@@ -152,9 +152,3 @@ def find_supermarkets(adress, radius = 4e3):
                           
   return travel_informations
   
-  
-# Test : 
-
-# c = find_supermarkets('27 Boulevard Thomas Gobert, Palaiseau 91120')
-
-

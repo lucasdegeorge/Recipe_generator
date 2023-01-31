@@ -1,5 +1,5 @@
 
-from ttkwidgets.autocomplete import AutocompleteCombobox
+# from ttkwidgets.autocomplete import AutocompleteCombobox
 import random as rd
 import os
 import numpy as np
@@ -8,6 +8,9 @@ from math import *
 import googlemaps as gm
 import geopy as gp
 import time
+
+from import_data import *
+from classes_data import *
 
 
 ### Constants : 
